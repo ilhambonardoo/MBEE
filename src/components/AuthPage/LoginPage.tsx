@@ -38,11 +38,11 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-neutral-950 px-4 py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-white px-4 py-12 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="max-w-md w-full space-y-8 relative">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-amber-700 dark:text-neutral-400 dark:hover:text-amber-500 transition-colors mb-4 group"
+          className="inline-flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-amber-700 transition-colors mb-4 group"
         >
           <ArrowLeft
             size={16}
@@ -51,15 +51,15 @@ const LoginPage = () => {
           Kembali ke Beranda
         </Link>
 
-        <div className="bg-white dark:bg-neutral-900 p-8 rounded-3xl shadow-2xl border border-neutral-100 dark:border-neutral-800 transition-all">
+        <div className="bg-white p-8 rounded-3xl shadow-2xl border border-neutral-100 transition-all">
           <div className="text-center mb-10">
-            <div className="mx-auto w-16 h-16 bg-amber-700 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-200 dark:shadow-amber-900/20 mb-6">
+            <div className="mx-auto w-16 h-16 bg-amber-700 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-200 mb-6">
               <Beef className="text-white" size={32} />
             </div>
-            <h2 className="text-3xl font-bold text-neutral-900 dark:text-white tracking-tight">
+            <h2 className="text-3xl font-bold text-neutral-900 tracking-tight">
               Selamat Datang
             </h2>
-            <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400">
+            <p className="mt-3 text-sm text-neutral-500">
               Masuk untuk mengelola peternakan Anda
             </p>
           </div>
@@ -68,7 +68,7 @@ const LoginPage = () => {
             <div>
               <label
                 htmlFor="identifier"
-                className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300 mb-2 ml-1"
+                className="block text-sm font-semibold text-neutral-700 mb-2 ml-1"
               >
                 Email atau Username
               </label>
@@ -77,7 +77,7 @@ const LoginPage = () => {
                 name="identifier"
                 type="text"
                 required
-                className="appearance-none block w-full px-4 py-3.5 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all sm:text-sm"
+                className="appearance-none block w-full px-4 py-3.5 bg-neutral-50 border border-neutral-200 rounded-2xl text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all sm:text-sm"
                 placeholder="nama@email.com"
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
@@ -88,13 +88,13 @@ const LoginPage = () => {
               <div className="flex items-center justify-between mb-2 ml-1">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-semibold text-neutral-700 dark:text-neutral-300"
+                  className="block text-sm font-semibold text-neutral-700"
                 >
                   Kata Sandi
                 </label>
                 <Link
                   href="#"
-                  className="text-xs font-semibold text-amber-700 dark:text-amber-500 hover:underline"
+                  className="text-xs font-semibold text-amber-700 hover:underline"
                 >
                   Lupa password?
                 </Link>
@@ -105,7 +105,7 @@ const LoginPage = () => {
                 type="password"
                 autoComplete="current-password"
                 required
-                className="appearance-none block w-full px-4 py-3.5 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-2xl text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all sm:text-sm"
+                className="appearance-none block w-full px-4 py-3.5 bg-neutral-50 border border-neutral-200 rounded-2xl text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all sm:text-sm"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -115,7 +115,7 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-2xl text-white shadow-lg shadow-amber-200 dark:shadow-none transition-all transform active:scale-[0.98] ${
+              className={`w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-2xl text-white shadow-lg shadow-amber-200 transition-all transform active:scale-[0.98] ${
                 isLoading
                   ? "bg-amber-400 cursor-not-allowed"
                   : "bg-amber-700 hover:bg-amber-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
@@ -150,12 +150,12 @@ const LoginPage = () => {
             </button>
           </form>
 
-          <div className="mt-8 pt-6 border-t border-neutral-100 dark:border-neutral-800 text-center">
-            <p className="text-sm text-neutral-500 dark:text-neutral-400">
+          <div className="mt-8 pt-6 border-t border-neutral-100 text-center">
+            <p className="text-sm text-neutral-500">
               Belum punya akun?{" "}
               <Link
                 href="/register"
-                className="font-bold text-amber-700 dark:text-amber-500 hover:underline"
+                className="font-bold text-amber-700 hover:underline"
               >
                 Daftar Sekarang
               </Link>
