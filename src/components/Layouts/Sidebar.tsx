@@ -4,57 +4,21 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, spring } from "framer-motion";
-import {
-  LayoutDashboard,
-  Beef,
-  UserCircle,
-  LogOut,
-  Menu,
-  X,
-  ChevronRight,
-  User2Icon,
-  Edit,
-} from "lucide-react";
+import { Menu, X, ChevronRight, Edit, LogOut } from "lucide-react";
 import { cn } from "@/src/utils/cn";
 import ThemeToggle from "../utils/ThemeToggle";
 import { signOut, useSession } from "next-auth/react";
-
-const menuItems = [
-  {
-    title: "Dashboard",
-    href: "/dashboard",
-    icon: LayoutDashboard,
-  },
-
-  {
-    title: "Kambing",
-    href: "/kambing",
-    icon: Beef,
-  },
-  {
-    title: "Profil",
-    href: "/profile",
-    icon: UserCircle,
-  },
-  {
-    title: "Manajemen Users",
-    href: "/users",
-    icon: User2Icon,
-  },
-];
+import { menuItems } from "@/src/constant/sidebarMenu";
+import { useMounted } from "@/src/hooks/useMounted";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [openMenu, setOpenMenu] = useState<string[]>([]);
   const pathname = usePathname();
   const { data: session } = useSession();
 
   useEffect(() => {
-    setTimeout(() => {
-      setMounted(true);
-    }, 0);
-
     const checkMobile = () => {
       const mobile = window.innerWidth < 1024;
       setIsMobile(mobile);
@@ -67,9 +31,16 @@ const Sidebar = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  const mounted = useMounted();
   if (!mounted) return null;
 
   const toggleSidebar = () => setIsOpen(!isOpen);
+
+  const toggleSubMenu = (title: string) => {
+    setOpenMenu((prev) =>
+      prev.includes(title) ? prev.filter((t) => t !== title) : [...prev, title],
+    );
+  };
 
   const sidebarVariants = {
     open: {
@@ -144,20 +115,37 @@ const Sidebar = () => {
           className={`flex-1 px-2 py-3 space-y-1 ${isOpen ? "mt-2" : "mt-20"}`}
         >
           {menuItems.map((item) => {
-            const isActive = pathname === item.href;
+            const hasChildren = item.children && item.children.length > 0;
+            const isSubOpen = openMenu.includes(item.title);
+            const isActive =
+              pathname === item.href ||
+              item.children?.some((child) => pathname === child.href);
+
             return (
-              <Link key={item.href} href={item.href}>
+              <div key={item.title} className="w-full">
                 <motion.div
                   variants={navItemVariants}
                   whileHover="hover"
                   whileTap="tap"
+                  onClick={() => {
+                    if (isOpen && hasChildren) {
+                      toggleSubMenu(item.title);
+                    }
+                  }}
                   className={cn(
-                    "group relative flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200",
+                    "group relative flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 cursor-pointer",
                     isActive
                       ? "bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-500 shadow-sm"
                       : "text-neutral-500 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-neutral-50",
                   )}
                 >
+                  {!isOpen || !hasChildren ? (
+                    <Link
+                      href={item.href! || item.children?.[0].href || "#"}
+                      className="absolute inset-0"
+                    />
+                  ) : null}
+
                   <item.icon
                     size={20}
                     className={cn(
@@ -167,6 +155,12 @@ const Sidebar = () => {
                         : "group-hover:text-amber-700 dark:group-hover:text-amber-500",
                     )}
                   />
+
+                  {!isOpen && (
+                    <div className="absolute left-16 scale-0 group-hover:scale-100 transition-all origin-left bg-neutral-800 text-white text-xs px-2 py-1 rounded shadow-xl whitespace-nowrap z-50">
+                      {item.title}
+                    </div>
+                  )}
 
                   <AnimatePresence>
                     {isOpen && (
@@ -181,7 +175,17 @@ const Sidebar = () => {
                     )}
                   </AnimatePresence>
 
-                  {isActive && (
+                  {/* Icon Arrow untuk DropDown */}
+                  {isOpen && hasChildren && (
+                    <motion.div
+                      animate={{ rotate: isSubOpen ? 90 : 0 }}
+                      className="ml-auto"
+                    >
+                      <ChevronRight size={14} />
+                    </motion.div>
+                  )}
+
+                  {isActive && !hasChildren && (
                     <motion.div
                       layoutId="active-pill"
                       className="absolute left-0 w-1 h-8 bg-amber-700 rounded-r-full"
@@ -192,21 +196,52 @@ const Sidebar = () => {
                       }}
                     />
                   )}
+                </motion.div>
 
-                  {isOpen && isActive && (
+                {/* Submenu Container */}
+                <AnimatePresence>
+                  {isOpen && hasChildren && isSubOpen && (
                     <motion.div
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="ml-auto"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className="overflow-hidden mt-1"
                     >
-                      <ChevronRight
-                        size={16}
-                        className="text-amber-700 dark:text-amber-500"
-                      />
+                      <div className="pl-4 pr-2 space-y-1 py-1">
+                        {item.children.map((child) => {
+                          const isChildActive = pathname === child.href;
+                          const SubIcon = child.icon;
+                          return (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              className={cn(
+                                "flex items-center gap-2 py-2 px-3 text-sm rounded-lg transition-colors relative",
+                                isChildActive
+                                  ? "text-amber-700 dark:text-amber-500 font-semibold bg-amber-50/50 dark:bg-amber-950/20"
+                                  : "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-50 hover:bg-neutral-50 dark:hover:bg-neutral-800",
+                              )}
+                            >
+                              {SubIcon && (
+                                <SubIcon
+                                  size={16}
+                                  className={cn(
+                                    "shrink-0",
+                                    isChildActive
+                                      ? "text-amber-700"
+                                      : "text-neutral-400",
+                                  )}
+                                />
+                              )}
+                              <span>{child.title}</span>
+                            </Link>
+                          );
+                        })}
+                      </div>
                     </motion.div>
                   )}
-                </motion.div>
-              </Link>
+                </AnimatePresence>
+              </div>
             );
           })}
         </nav>
