@@ -119,7 +119,11 @@ const Sidebar = () => {
             const isSubOpen = openMenu.includes(item.title);
             const isActive =
               pathname === item.href ||
-              item.children?.some((child) => pathname === child.href);
+              item.children?.some(
+                (child) =>
+                  pathname === child.href ||
+                  (child.href === "/kambing" && pathname === "/kambing/create"),
+              );
 
             return (
               <div key={item.title} className="w-full">
@@ -209,7 +213,11 @@ const Sidebar = () => {
                     >
                       <div className="pl-4 pr-2 space-y-1 py-1">
                         {item.children.map((child) => {
-                          const isChildActive = pathname === child.href;
+                          const isChildActive =
+                            pathname === child.href ||
+                            (child.href === "/kambing" &&
+                              pathname === "/kambing/create");
+
                           const SubIcon = child.icon;
                           return (
                             <Link
