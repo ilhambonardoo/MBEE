@@ -21,7 +21,7 @@ model User {
 
 model Kambing {
   id            String           @id @default(cuid())
-  userId        String
+  userId        String?
   kode_kambing  String           @unique
   beratAwal     Float
   jenis_kelamin JenisKelamin?
@@ -36,7 +36,7 @@ model Kambing {
   imageKey      String?
   imageUrl      String?
   nama          String
-  user          User             @relation(fields: [userId], references: [id])
+  user          User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
   riwayatBerat  RiwayatBerat[]
 }
 
