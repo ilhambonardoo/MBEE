@@ -1,3 +1,4 @@
+import { Kambing } from "../generated/prisma/client";
 import {
   JenisHewan,
   JenisKelamin,
@@ -12,10 +13,18 @@ export interface KambingModel {
   nama: string;
   jenis_kelamin: JenisKelamin;
   umur: number;
-  tgl_lahir: Date;
-  statusHamil: StatusKehamilan;
-  tgl_masuk: Date;
-  imageUrl: string;
-  imageKey: string;
-  userId?: string;
+  tgl_lahir: Date | null;
+  statusHamil: StatusKehamilan | null;
+  tgl_masuk?: Date;
+  imageUrl?: string | null;
+  imageKey?: string | null;
+  userId?: string | null;
+}
+
+export interface KambingFormProps {
+  initialData?: KambingModel | null;
+  onSubmit: (data: Kambing) => Promise<void>;
+  isSubmitting: boolean;
+  submitLabel: string;
+  localStorageKeySuffix?: string;
 }
