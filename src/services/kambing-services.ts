@@ -2,6 +2,9 @@
 import { KambingModel } from "@/src/interface/kambing";
 import { prisma } from "@/src/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { UTApi } from "uploadthing/server";
+
+const utapi = new UTApi();
 
 export async function getAllKambing() {
   const data = await prisma.kambing.findMany({
@@ -13,11 +16,22 @@ export async function getAllKambing() {
 
 export async function getKambingById(id: string) {
   const data = await prisma.kambing.findUnique({ where: { id } });
-  return { status: 200, data };
+  return { status: 200, data, message: "Data berhasil dihapus" };
 }
 
 export async function deleteKambing(id: string) {
+  const existing = await prisma.kambing.findUnique({ where: { id } });
+
+  if (!existing) {
+    return { status: 404, message: "Data tidak ditemukan" };
+  }
+
   const data = await prisma.kambing.delete({ where: { id } });
+
+  if (existing.imageKey) {
+    await utapi.deleteFiles(existing.imageKey);
+  }
+
   return { status: 200, data, message: "Data berhasil dhapus" };
 }
 
@@ -93,4 +107,12 @@ export async function updateKambing(id: string, formData: KambingModel) {
     data: updateKambing,
     message: "Data kambing berhasil di ubah!",
   };
+}
+
+export async function deleteImage(key: string) {
+  if (!key) return;
+
+  await utapi.deleteFiles(key);
+
+  return { success: true };
 }
