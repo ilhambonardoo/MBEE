@@ -5,11 +5,13 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useMounted } from "@/src/hooks/useMounted";
 
 const NavbarLanding = () => {
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const mounted = useMounted();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,12 +24,14 @@ const NavbarLanding = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-transparent backdrop-blur-2xl shadow-sm py-3"
-          : "bg-transparent py-5"
+        isScrolled ? "bg-transparent shadow-sm py-3" : "bg-transparent py-5"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
