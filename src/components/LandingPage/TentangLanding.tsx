@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import { useTypewriter } from "@/src/hooks/useTypewriter";
-import Link from "next/link";
 import { useMounted } from "@/src/hooks/useMounted";
 
 const TentangLanding = () => {
@@ -13,7 +12,7 @@ const TentangLanding = () => {
   if (!mounted) return null;
 
   return (
-    <section className="w-full bg-amber-700 min-h-100 flex items-center py-16 relative overflow-hidden">
+    <section className="w-full bg-amber-700 min-h-100 flex items-center  relative overflow-hidden lg:py-10">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full flex flex-col justify-between h-full relative">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -25,20 +24,6 @@ const TentangLanding = () => {
             {displayedText}
             <span className="animate-pulse">|</span>
           </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.5, ease: "easeInOut" }}
-          className="mt-12 lg:mt-16"
-        >
-          <Link
-            href="#features"
-            className="inline-flex items-center justify-center px-8 py-4 bg-white text-amber-700 font-semibold rounded-2xl hover:bg-gray-50 transition-all shadow-lg hover:shadow-xl"
-          >
-            Tentang kami
-          </Link>
         </motion.div>
       </div>
     </section>

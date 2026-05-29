@@ -34,9 +34,9 @@ const JenisKambing = () => {
   if (!mounted) return null;
   return (
     <>
-      <section className="w-full bg-white pt-16 md:pt-24">
+      <section className="w-full bg-white pt-16 pb-10 md:pt-24">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-center items-center px-6 lg:px-22">
-          <div className="w-full md:w-1/2">
+          <div className="w-full md:w-1/2 ">
             <Swiper
               modules={[Pagination]}
               pagination={{
@@ -47,19 +47,17 @@ const JenisKambing = () => {
               speed={500}
               spaceBetween={0}
               slidesPerView={1}
-              className="w-full"
+              className="w-full rounded-3xl md:rounded-2xl"
             >
               {goats.map((goat) => (
                 <SwiperSlide key={goat.id}>
-                  <div className="p-2 md:p-4">
-                    <Image
-                      src={goat.src}
-                      alt={goat.name}
-                      height={600}
-                      width={800}
-                      className="w-full h-auto object-cover rounded-3xl md:rounded-4xl shadow-md"
-                    />
-                  </div>
+                  <Image
+                    src={goat.src}
+                    alt={goat.name}
+                    height={600}
+                    width={800}
+                    className="object-cover shadow-md"
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>
