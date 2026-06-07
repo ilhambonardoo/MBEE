@@ -28,3 +28,11 @@ export interface KambingFormProps {
   submitLabel: string;
   localStorageKeySuffix?: string;
 }
+
+export interface StatsData {
+  total: number;
+  jantan: number;
+  betina: number;
+  domba: number;
+  kambing: number;
+}

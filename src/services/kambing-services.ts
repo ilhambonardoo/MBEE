@@ -16,7 +16,7 @@ export async function getAllKambing() {
 
 export async function getKambingById(id: string) {
   const data = await prisma.kambing.findUnique({ where: { id } });
-  return { status: 200, data, message: "Data berhasil dihapus" };
+  return { status: 200, data, message: "Data berhasil ditemukan" };
 }
 
 export async function deleteKambing(id: string) {
@@ -115,4 +115,38 @@ export async function deleteImage(key: string) {
   await utapi.deleteFiles(key);
 
   return { success: true };
+}
+
+export async function getKambingStats() {
+  const [totalKambing, perKelamin, perJenis] = await Promise.all([
+    prisma.kambing.count(),
+    prisma.kambing.groupBy({
+      by: ["jenis_kelamin"],
+      _count: { _all: true },
+    }),
+    prisma.kambing.groupBy({
+      by: ["jenis_hewan"],
+      _count: { _all: true },
+    }),
+  ]);
+
+  const formattedData = {
+    total: totalKambing,
+    jantan:
+      perKelamin.find((item) => item.jenis_kelamin === "JANTAN")?._count._all ||
+      0,
+    betina:
+      perKelamin.find((item) => item.jenis_kelamin === "BETINA")?._count._all ||
+      0,
+    domba:
+      perJenis.find((item) => item.jenis_hewan === "DOMBA")?._count._all || 0,
+    kambing:
+      perJenis.find((item) => item.jenis_hewan === "KAMBING")?._count._all || 0,
+  };
+
+  return {
+    status: 201,
+    message: "Statistik berhasi dimuat",
+    data: formattedData,
+  };
 }
