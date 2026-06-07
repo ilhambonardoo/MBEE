@@ -14,7 +14,20 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const payload = { ...body, userId: session.user.id };
+    const { ...formData } = body;
+
+    const payload = {
+      ...body,
+      userId: session.user.id,
+      imageUrl:
+        formData.imageUrl === null || formData.imageUrl === ""
+          ? undefined
+          : formData.imageUrl,
+      imageKey:
+        formData.imageKey === null || formData.imageKey === ""
+          ? undefined
+          : formData.imageKey,
+    };
     const validation = KambingValidation.CREATE.safeParse(payload);
 
     if (!validation.success) {

@@ -23,7 +23,20 @@ export async function PATCH(
     const { id } = await params;
     const body = await request.json();
 
-    const payload = { ...body, userId: session.user.id };
+    const { oldImageKeyToDelete, ...formData } = body;
+
+    const payload = {
+      ...formData,
+      userId: session.user.id,
+      imageUrl:
+        formData.imageUrl === null || formData.imageUrl === ""
+          ? undefined
+          : formData.imageUrl,
+      imageKey:
+        formData.imageKey === null || formData.imageKey === ""
+          ? undefined
+          : formData.imageKey,
+    };
     const validation = KambingValidation.UPDATE.safeParse(payload);
 
     if (!validation.success) {
@@ -36,7 +49,7 @@ export async function PATCH(
       );
     }
 
-    const res = await updateKambing(id, body);
+    const res = await updateKambing(id, formData, oldImageKeyToDelete);
     if (res.status !== 200) {
       return NextResponse.json(
         { message: res.message },

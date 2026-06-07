@@ -22,7 +22,8 @@ export class KambingValidation {
       .string()
       .url("URL gambar tidak valid")
       .optional()
-      .or(z.literal("")),
+      .or(z.literal(""))
+      .nullable(),
     imageKey: z.string().optional().or(z.literal("")),
   });
 
@@ -42,7 +43,8 @@ export class KambingValidation {
       .string()
       .url("URL gambar tidak valid")
       .optional()
-      .or(z.literal("")),
+      .or(z.literal(""))
+      .nullable(),
     imageKey: z.string().optional().or(z.literal("")),
   });
 }
