@@ -5,9 +5,12 @@ import {
   Beef,
   UserCircle,
   Plus,
+  LucideScale3D,
+  Wheat,
+  History,
 } from "lucide-react";
 
-import { IoScaleSharp } from "react-icons/io5";
+import { IoScaleSharp, IoTrendingUp } from "react-icons/io5";
 
 export const menuItems = [
   {
@@ -24,6 +27,27 @@ export const menuItems = [
       { title: "Daftar Ternak", href: "/ternak", icon: List },
       { title: "Tambah Ternak", href: "/ternak/create", icon: Plus },
     ],
+    roles: ["ADMIN", "OPERATOR"],
+  },
+
+  {
+    title: "Prediksi",
+    icon: IoTrendingUp,
+    children: [
+      {
+        title: " Prediksi Bobot",
+        href: "/prediksi-bobot",
+        icon: LucideScale3D,
+      },
+      { title: " Prediksi Pakan", href: "/prediksi-pakan", icon: Wheat },
+    ],
+    roles: ["ADMIN", "OPERATOR"],
+  },
+
+  {
+    title: "Riwayat Kandang",
+    href: "/riwayat",
+    icon: History,
     roles: ["ADMIN", "OPERATOR"],
   },
 
