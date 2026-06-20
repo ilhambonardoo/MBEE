@@ -6,6 +6,7 @@ import {
   StatusKehamilan,
 } from "../generated/prisma/enums";
 
+// Model Ternak model ini untuk keperluan Form/Input Data
 export interface TernakModel {
   kode_hewan: string;
   jenis_hewan: JenisHewan;
@@ -25,12 +26,23 @@ export interface TernakModel {
   sekat?: {
     id: string;
     kodeSekat: string;
+    keteranganSekat: string | null;
     kandangId: string;
     kandang?: {
       id: string;
       nama: string;
     };
   } | null;
+}
+
+// Model Ternak With Relasi untuk keperluan tampilan/read only data
+export interface TernakWithRelasi extends Omit<
+  TernakModel,
+  "tgl_masuk" | "tgl_lahir"
+> {
+  id: string;
+  tgl_masuk: Date | string;
+  tgl_lahir: Date | string | null;
 }
 
 export interface TernakFormProps {
@@ -59,24 +71,4 @@ export interface StatsData {
   betina: number;
   domba: number;
   kambing: number;
-}
-
-// Definisi tipe extend untuk TypeScript agar tidak error membaca relasi sekat & kandang
-export interface TernakExtended {
-  id: string;
-  kode_hewan: string;
-  nama: string;
-  jenis_hewan: string;
-  jenis_kelamin: string | null;
-  beratAwal: number;
-  beratAkhir: number;
-  imageUrl?: string | null;
-  programTernak: string | null;
-  sekat?: {
-    kodeSekat: string;
-    keteranganSekat: string;
-    kandang?: {
-      nama: string;
-    };
-  } | null;
 }

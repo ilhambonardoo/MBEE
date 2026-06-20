@@ -7,7 +7,7 @@ import { useTernak } from "@/src/hooks/useTernak";
 import { useSearchPagination } from "@/src/hooks/useSearchPagination";
 import SearchInput from "../utils/SearchInput";
 import Pagination from "../utils/Pagination";
-import { TernakExtended } from "@/src/interface/ternak";
+import { TernakWithRelasi } from "@/src/interface/ternak";
 
 const DaftarTernak = () => {
   const { dataTernak, isLoading, errors, deleteTernak } = useTernak();
@@ -141,7 +141,7 @@ const DaftarTernak = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 dark:divide-neutral-800">
-                {currentItems.map((item: TernakExtended) => (
+                {currentItems.map((item: TernakWithRelasi) => (
                   <tr
                     key={item.id}
                     className="hover:bg-gray-50 dark:hover:bg-neutral-800/50 transition-colors"
