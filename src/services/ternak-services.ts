@@ -64,6 +64,8 @@ const parseTernakData = (formData: TernakModel) => ({
   jenis_kelamin: formData.jenis_kelamin as "JANTAN" | "BETINA",
   statusHamil:
     formData.jenis_kelamin === "BETINA" ? formData.statusHamil : null,
+  statusMenyusui:
+    formData.jenis_kelamin === "BETINA" ? formData.statusMenyusui : null,
   sekatId: formData.sekatId || null,
   programTernak: formData.programTernak ?? null,
   imageUrl: formData.imageUrl === null ? null : formData.imageUrl || null,

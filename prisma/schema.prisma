@@ -33,6 +33,7 @@ model Ternak {
   updatedAt     DateTime         @updatedAt
   beratAkhir    Float
   statusHamil   StatusKehamilan?
+  statusMenyusui StatusMenyusui?
   umur          Int
   jenis_hewan   JenisHewan
   sekatId       String?
@@ -105,4 +106,9 @@ enum ProgramTernak {
 enum KeteranganSekat {
   INDIVIDU
   KOLONI
+}
+
+enum StatusMenyusui {
+  MENYUSUI
+  TIDAK_MENYUSUI
 }

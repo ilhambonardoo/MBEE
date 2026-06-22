@@ -4,6 +4,7 @@ import {
   JenisKelamin,
   ProgramTernak,
   StatusKehamilan,
+  StatusMenyusui,
 } from "../generated/prisma/enums";
 
 // Model Ternak model ini untuk keperluan Form/Input Data
@@ -17,6 +18,7 @@ export interface TernakModel {
   umur: number;
   tgl_lahir: Date | null;
   statusHamil: StatusKehamilan | null;
+  statusMenyusui: StatusMenyusui | null;
   tgl_masuk?: Date;
   imageUrl?: string | null;
   imageKey?: string | null;
@@ -41,6 +43,7 @@ export interface TernakWithRelasi extends Omit<
   "tgl_masuk" | "tgl_lahir"
 > {
   id: string;
+  statusMenyusui: StatusMenyusui | null;
   tgl_masuk: Date | string;
   tgl_lahir: Date | string | null;
 }
