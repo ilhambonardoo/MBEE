@@ -79,13 +79,12 @@ const NavbarLanding = () => {
       >
         <div className="px-4 pt-4 pb-6 space-y-2">
           <div className="pt-4 flex flex-col space-y-3">
-            <Link
-              href="/login"
+            <button
               className="block w-full text-center px-3 py-2 text-base font-medium text-gray-700 border border-gray-200 rounded-md"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => signIn()}
             >
               Log in
-            </Link>
+            </button>
           </div>
         </div>
       </div>
