@@ -49,7 +49,7 @@ export default function PrediksiPakanPage() {
     "bg-white text-neutral-800 dark:bg-neutral-900 dark:text-white";
 
   return (
-    <div className="p-6 md:p-8 text-neutral-900 dark:text-white max-w-5xl mx-auto flex flex-col gap-6 min-h-screen transition-colors duration-300">
+    <div className="p-6 pt-16 md:p-8 text-neutral-900 dark:text-white max-w-5xl mx-auto flex flex-col gap-6 min-h-screen transition-colors duration-300">
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-white">
           Prediksi Kebutuhan Pakan
