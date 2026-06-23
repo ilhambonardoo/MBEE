@@ -30,17 +30,17 @@ const NavbarLanding = () => {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-transparent shadow-sm py-3" : "bg-transparent py-5"
+        isScrolled ? "bg-transparent shadow-sm" : "bg-transparent py-5"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 pt-3 lg:py-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <Link href="/" className="flex items-center space-x-2 group">
             <Image
-              width={50}
-              height={50}
+              width={150}
+              height={150}
               alt="Logo Dark"
-              src={"/logo/SqueezeCage_Dark.png"}
+              src={"/logo/SqueezeCage_KalimatDark.png"}
             />
           </Link>
 

@@ -12,7 +12,7 @@ import { menuItems } from "@/src/constant/sidebarMenu";
 import { useMounted } from "@/src/hooks/useMounted";
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [openMenu, setOpenMenu] = useState<string[]>([]);
   const pathname = usePathname();
@@ -24,10 +24,7 @@ const Sidebar = () => {
     const checkMobile = () => {
       const mobile = window.innerWidth < 1024;
       setIsMobile(mobile);
-      if (!mobile) setIsOpen(true);
-      else setIsOpen(false);
     };
-
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
@@ -100,14 +97,14 @@ const Sidebar = () => {
         variants={sidebarVariants}
         animate={isOpen ? "open" : "closed"}
         className={cn(
-          "fixed top-0 left-0 h-screen bg-white dark:bg-neutral-900 z-40 flex flex-col shadow-xl", // Perubahan: 'min-h-screen' diubah ke 'h-screen' agar tinggi pas dengan viewport
+          "fixed top-0 left-0 h-screen bg-white dark:bg-neutral-900 z-40 flex flex-col  shadow-xl overflow-y-auto", // Perubahan: 'min-h-screen' diubah ke 'h-screen' agar tinggi pas dengan viewport
           !isOpen && isMobile && "-translate-x-full ",
         )}
       >
         <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar">
           <div className=" bg-white dark:bg-neutral-900 flex relative">
             <div className="absolute right-0 top-1">
-              <ThemeToggle isOpen={isOpen} />
+              <ThemeToggle />
             </div>
           </div>
           {isOpen && (
@@ -274,7 +271,7 @@ const Sidebar = () => {
                 </div>
               );
             })}
-            <div className="absolute left-3 bottom-10">
+            <div className="absolute left-3 bottom-15">
               {isOpen && (
                 <>
                   <button
