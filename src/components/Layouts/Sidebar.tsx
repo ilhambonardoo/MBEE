@@ -100,7 +100,7 @@ const Sidebar = () => {
         variants={sidebarVariants}
         animate={isOpen ? "open" : "closed"}
         className={cn(
-          "fixed top-0 left-0 h-screen bg-white dark:bg-neutral-900 z-40 overflow-hidden flex flex-col shadow-xl",
+          "fixed top-0 left-0 min-h-screen bg-white dark:bg-neutral-900 z-40 overflow-hidden flex flex-col shadow-xl",
           !isOpen && isMobile && "-translate-x-full ",
         )}
       >
