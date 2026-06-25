@@ -20,6 +20,7 @@ import {
   StatusMenyusui,
 } from "@/src/generated/prisma/client";
 import { TernakFormProps } from "@/src/interface/ternak";
+import { useTimbangan } from "@/src/hooks/useTimbangan";
 
 export const TernakForm = ({
   initialData,
@@ -78,6 +79,9 @@ export const TernakForm = ({
   const [selectedSekatId, setSelectedSekatId] = useState<string>(
     initialData?.sekatId || "",
   );
+
+  // Untuk timbangan
+  const { liveWeight, isConnected } = useTimbangan();
 
   const [prevInitialData, setPrevInitialData] = useState(initialData);
 
@@ -405,9 +409,20 @@ export const TernakForm = ({
       <div className="flex flex-col gap-5">
         {/* WEIGHT INPUTS */}
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-neutral-700 dark:text-neutral-400">
-            Berat Awal (kg)
-          </label>
+          <div className="flex gap-5 justify-between">
+            <label className="text-sm font-medium text-neutral-700 dark:text-neutral-400">
+              Berat Awal
+            </label>
+            <button
+              type="button"
+              disabled={!isConnected}
+              onClick={() => setBeratAwal(liveWeight)}
+              className="px-3 py-1.2 cursor-pointer text-xs font-bold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 rounded-lg hover:opacity-80 transition disabled:opacity-40"
+              title="Gunakan berat dari timbangan digital"
+            >
+              Ambil dari Timbangan ({liveWeight} kg)
+            </button>
+          </div>
           <input
             type="number"
             step="0.1"
@@ -418,9 +433,20 @@ export const TernakForm = ({
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-neutral-700 dark:text-neutral-400">
-            Berat Akhir (kg)
-          </label>
+          <div className="flex gap-5 justify-between w-full">
+            <label className="text-sm font-medium text-neutral-700 dark:text-neutral-400">
+              Berat Akhir
+            </label>
+            <button
+              type="button"
+              disabled={!isConnected}
+              onClick={() => setBeratAkhir(liveWeight)}
+              className="px-3 py-1.2 cursor-pointer text-xs font-bold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 rounded-lg hover:opacity-80 transition disabled:opacity-40"
+              title="Gunakan berat dari timbangan digital"
+            >
+              Ambil dari Timbangan ({liveWeight} kg)
+            </button>
+          </div>
           <input
             type="number"
             step="0.1"
