@@ -32,6 +32,7 @@ const plentyFont = localFont({
 export const metadata: Metadata = {
   title: "Squeeze Cage",
   description: "Platform Manajemen Hewan",
+  icons: "/logo/logo_squeezecage_4848.svg",
 };
 
 export default function RootLayout({
